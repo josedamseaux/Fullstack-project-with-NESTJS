@@ -48,16 +48,7 @@ export class UsersService {
       return await this.usersRepository.delete(id);
     }
 
-    // async deleteConstraint(): Promise<any> {
-    //   const deletee = await this.usersRepository
-    //   .createQueryBuilder("delete")
-    //   .delete()
-    //   .from(PaymentsEntity)
-    //   .where("pay.customerId = Persons.Id")
-    //   // .select("persons.firstName, persons.lastName, pay.payDate, pay.customerId, pay.id")
-    //   .execute()
-    //   return deletee;
-    // }
+
 
 
 }

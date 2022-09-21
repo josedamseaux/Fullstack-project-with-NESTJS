@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserClass } from '../class/user';
+import { User } from '../interfaces/usersinterface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,12 @@ export class DataService {
     return this.httpClient.get<any[]>(`${this.urlUsers}/${id}`);
   }
 
-  createContact(user: UserClass){
-    return this.httpClient.post<UserClass>(`${this.urlUsers}/create`, user);
+  createContact(user: User){
+    return this.httpClient.post<User>(`${this.urlUsers}/create`, user);
   }
 
-  updateContact(user: UserClass){
-    return this.httpClient.put<UserClass>(`${this.urlUsers}/update/${user.id}`, user);
+  updateContact(user: User){
+    return this.httpClient.put<User>(`${this.urlUsers}/update/${user.id}`, user);
   }
 
   deleteContact(id: number){
