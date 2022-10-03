@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/usersinterface';
+import { PaymentInterface } from '../interfaces/paymentsinterface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class DataService {
   constructor(public httpClient: HttpClient) { }
 
   urlUsers: string = 'http://localhost:3000/users';
+
+  getPayments(): Observable<any[]>{
+    return this.httpClient.get<any[]>('http://localhost:3000/joined')
+  }
 
   getUsers(): Observable<any[]>{
     return this.httpClient.get<any[]>(this.urlUsers)

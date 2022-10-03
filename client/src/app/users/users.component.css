@@ -1,5 +1,5 @@
 form > button{
-    background-color: rgb(120, 120, 239);
+    background-color: rgb(0, 0, 0);
     color: white;
 }
 
@@ -7,3 +7,32 @@ form > button{
 .example-form-field {
     height: 100px;
   }
+
+  #mat-card-header-title {
+    height: 1px;
+    padding-top:15px;
+  }
+
+  button {
+    margin-right: 4px;
+
+  }
+
+  .swal2-popup > .swal2-deny {
+    background-color: rgb(0, 0, 0);
+    color: white;
+  }
+
+  .addUserButton, .viewUserButton{
+    width: 150px;
+  }
+
+  .mat-row {
+    height: auto;
+  }
+  
+  .mat-cell {
+    padding: 5px;
+  }
+
+  

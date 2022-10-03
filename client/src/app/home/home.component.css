@@ -1,0 +1,10 @@
+form > button{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    margin-right: 4px;
+}
+
+.addPaymentButton{
+    width: 150px;
+
+}

@@ -6,7 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -26,13 +25,11 @@ export class UsersComponent implements OnInit {
     { affiliateType: 'BLACK', value: 'BLACK' }
   ];
 
-  // MATERIAL ELEMENTS ***************
 
   private OnDestroy$ = new Subject();
   editUserModeActivated: boolean = false;
   addUserModeActivated: boolean = false;
   searchUser$ = new Subject<string>();
-
 
   listFiltered: any[] = [''];
   test: number | undefined;
@@ -49,8 +46,17 @@ export class UsersComponent implements OnInit {
     emailAdress: ''
   }
 
-  f: FormControl | undefined;
+  userSelected2 = {
+    firstName: '',
+    lastName: '',
+    dni: 0,
+    affiliateType: '',
+    startDate: '',
+    phoneNumber: '',
+    emailAdress: ''
+  }
 
+  f: FormControl;
 
   constructor(private dataService: DataService) { }
 
@@ -76,6 +82,11 @@ export class UsersComponent implements OnInit {
     return /\d/.test(myString);
   }
 
+  cleanForm(object: any){
+    Object.keys(object).forEach(key => delete object[key]);
+    delete this.test;
+  }
+
   filterList() {
     this.searchUser$.pipe(
       debounceTime(400), distinctUntilChanged()).subscribe(term => {
@@ -96,7 +107,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  selectUser(user: User) {
+  viewUser(user: User) {
     this.addUserModeActivated = false;
     let userSelected = {
       id: user.id,
@@ -110,6 +121,8 @@ export class UsersComponent implements OnInit {
     }
     this.test = user.dni;
     this.user = userSelected;
+    this.userSelected2 = user;
+
 
     Swal.fire({
       title: userSelected.firstName + ' ' + userSelected.lastName,
@@ -117,18 +130,22 @@ export class UsersComponent implements OnInit {
       confirmButtonText: 'Edit user',
       showDenyButton: true,
       denyButtonText: `Delete user`,
-      confirmButtonColor: '#3399ff',
+      confirmButtonColor: "#000000",
+      denyButtonColor: "#000000",
+      
 
     }).then((result) => {
       if (result.value === true) {
         this.addUserModeActivated = true;
         this.editUserModeActivated = true;
-      } else if (result.isDenied) {
-        this.deleteUser(user.id);
-      }else if (result.dismiss === Swal.DismissReason.cancel) {
-      }
+        } else if (result.isDenied) {
+          this.deleteUser(user.id);
+          }else if (result.isDismissed) {
+            this.cleanForm(userSelected);
+         }
     });
   }
+
 
   createUser(f: any) {
     let date = new Date();
@@ -136,11 +153,12 @@ export class UsersComponent implements OnInit {
     f.value.startDate = currentDate;
 
     this.dataService.createContact(f.value).subscribe((result) => {
-      console.log(result);
       this.getUsers();
       this.addUserModeActivated = false
     });
     Swal.fire({
+      confirmButtonText: 'Ok',
+      confirmButtonColor: "#000000",
       title: 'Succes!',
       timer: 3000,
       text: 'User has been succesfully saved',
@@ -154,13 +172,16 @@ export class UsersComponent implements OnInit {
       text: 'You will not be able to recover this file!',
       icon: 'warning',
       showDenyButton: true,
+      showConfirmButton:false,
       showCancelButton: true,
+      
       denyButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isDenied) {
-        this.dataService.deleteContact(id).subscribe((result) => {
-          this.getUsers();
+        this.dataService.deleteContact(id).subscribe(() => {
+        this.getUsers();
+        this.cleanForm(this.user);
         });
         Swal.fire({
           title: 'Succesfully removed',
@@ -168,29 +189,43 @@ export class UsersComponent implements OnInit {
           text: 'User has been succesfully removed',
           icon: 'info',
         })
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        this.getUsers();
+      } else if (result.isDismissed) {
+        this.cleanForm(this.user);
+        this.user.id = 0
       }
     })
   }
 
+
   updateUser(f: NgForm) {
     f.value.id = this.user['id']
+    let compareDataFirstName = this.user.firstName.toLowerCase();
+    let compareDataFirstName2 = this.userSelected2.firstName.toLocaleLowerCase();
+    let compareDataLastName = this.user.lastName.toLowerCase();
+    let compareDataLastName2 = this.userSelected2.lastName.toLocaleLowerCase();
+    let compareDataEmailAdress = this.user.emailAdress.toLowerCase();
+    let compareDataEmailAdress2 = this.userSelected2.emailAdress.toLocaleLowerCase();
 
-    if (f.dirty) {
-      this.dataService.updateContact(f.value).subscribe((result) => {
+    if (compareDataFirstName != compareDataFirstName2 ||
+        compareDataLastName != compareDataLastName2 ||
+        this.test != this.userSelected2.dni ||
+        this.user.affiliateType != this.userSelected2.affiliateType ||
+        this.user.phoneNumber != this.userSelected2.phoneNumber ||
+        compareDataEmailAdress != compareDataEmailAdress2) {
+      this.dataService.updateContact(f.value).subscribe(() => {
       }).unsubscribe();
       Swal.fire({
         title: 'User succesfully updated',
         icon: 'success'
       })
-      this.getUsers();
       this.cancelEdit();
     } else {
       this.cancelEdit();
     }
+    this.getUsers();
   }
 
+  
   ngOnDestroy(): void {
     this.OnDestroy$.next;
   }

@@ -11,9 +11,14 @@ export class UsersController {
   getHello(): Promise<User[]> {
     return this.usersService.getAll();
   }
+
+  @Get('users')
+  async getOneUser(@Param('id') id): Promise<User> {
+    return this.usersService.getOneUser(id);
+  }
   
   @Get('users/:id')
-  getOneUser(@Param('id') id): Promise<User> {
+  async getOnlyOneUser(@Param('id') id): Promise<User> {
     return this.usersService.getOneUser(id);
   }
 
