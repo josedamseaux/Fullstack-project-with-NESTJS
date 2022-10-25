@@ -27,9 +27,6 @@ export class User {
   @Column()
   emailAdress: string;  
 
-  // @OneToMany(type => PaymentsEntity, payments => payments.customerId)
-  // payments: PaymentsEntity; 
-
   @OneToMany(() => PaymentsEntity, (payments) => payments.customerId)
   payments: PaymentsEntity
 

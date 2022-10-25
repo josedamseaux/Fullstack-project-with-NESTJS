@@ -2,20 +2,34 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/usersinterface';
-import { PaymentInterface } from '../interfaces/paymentsinterface';
+import { PayInterface } from '../interfaces/payinterface';
+
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DataService {
+  
+  public approvalStageMessage = new BehaviorSubject<boolean>(true);
 
   constructor(public httpClient: HttpClient) { }
 
   urlUsers: string = 'http://localhost:3000/users';
 
+  updateApprovalMessage(message: boolean) {
+  this.approvalStageMessage.next(message)
+
+  }
+
+
   getPayments(): Observable<any[]>{
     return this.httpClient.get<any[]>('http://localhost:3000/joined')
+  }
+
+  createPayment(pay: any){
+    return this.httpClient.post<User>(`http://localhost:3000/createpayment`, pay);
   }
 
   getUsers(): Observable<any[]>{

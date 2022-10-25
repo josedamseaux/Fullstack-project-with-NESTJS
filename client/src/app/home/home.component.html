@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="_isBoolean$ | async" >
     <mat-card-header >
     <button class="addPaymentButton" mat-raised-button (click)="onClickAddPayment()"    > Add payment    </button>
     </mat-card-header >
@@ -15,4 +15,6 @@
     </mat-card-content>
 
 </mat-card>
+
+
 

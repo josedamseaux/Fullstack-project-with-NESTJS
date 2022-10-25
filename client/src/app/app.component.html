@@ -1,14 +1,17 @@
-<div style="text-align:center">
+<div class="main">
 
-  <br><br>
-    <h1>
-      GYM USERS MANAGEMENT
-    </h1>
+  <div class="frontImage">
+
+    <h1> GYM USERS MANAGEMENT </h1>
     <img class="imgLogo" src="../assets/logo.png" alt="">
-<br><br>
+
   </div>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
-<app-home></app-home>
-<br><br><br>
+  <app-home *ngIf="canShowNavBar$ | async"></app-home>
+
+
+
+
+</div>

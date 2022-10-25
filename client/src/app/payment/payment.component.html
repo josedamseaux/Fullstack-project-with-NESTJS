@@ -1,0 +1,36 @@
+<mat-card>
+
+    <mat-card-header>
+      <mat-card-title id="mat-card-header-title">Add payment</mat-card-title>
+    </mat-card-header>
+    <div>
+
+       <p>ID  {{user.id}}
+       <br>
+        {{user.affiliateType}}
+        <br>
+        {{user.firstName}} {{user.lastName}}  
+        <br>
+        DNI {{user.dni}}
+        <br>
+        EMAIL {{user.emailAdress}}
+        <br>
+        PHONE NUMBER {{user.phoneNumber}}
+        <br>
+        START DATE {{user.startDate}}
+        </p>
+        <br>
+        <div [ngStyle]="{'color' : defaulter == true ? 'red' : 'green'}">{{upToDate}}</div>
+
+    </div>
+
+</mat-card>
+
+<div class="mt-2   d-flex justify-content-around ">
+
+    <button mat-raised-button (click)="goBack();" > Go back   </button>
+    
+    <button mat-raised-button (click)="pay();" > Pay  </button>
+
+
+</div>  

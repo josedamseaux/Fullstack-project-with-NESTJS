@@ -3,7 +3,7 @@ import { User } from '../user/user.entity';
 
 @Entity('Payments')
 export class PaymentsEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("identity")
   id: number;
 
   @Column()
@@ -12,10 +12,10 @@ export class PaymentsEntity {
   @Column()
   customerId: number;
 
-  @ManyToOne(() => User, (persons) => persons.id, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-    persons: User
+  // @ManyToOne(() => User, (persons) => persons.id, {
+  //   cascade: true,
+  //   onDelete: 'CASCADE',
+  // })
+  //   persons: User
 
 }

@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
-import { SweetalertComponent } from './sweetalert/sweetalert.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { SweetalertComponent } from './sweetalert/sweetalert.component';
     AppComponent,
     HomeComponent,
     UsersComponent,
-    SweetalertComponent,
+    PaymentComponent,
   ],
   imports: [
     BrowserModule,

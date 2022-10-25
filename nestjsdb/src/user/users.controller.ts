@@ -32,15 +32,6 @@ export class UsersController {
     return this.usersService.create(user);
   }  
   
-  // Regular update method, but does not work with identity tables
-  // @Put('/update/:id')
-  // async update(@Param('id') id, @Body() user: User): Promise<UpdateResult> {
-  //   user.id = Number(id);
-  //   return this.usersService.update(user);
-  // }
-
-  // Update method that works with identity tables, basically 'updates' user by
-  // deleting and creating new user by removing column, working for identity tables
   @Put('users/update/:id')
   async update(@Param('id') id, @Body() user: User): Promise<any> {
     user.id = Number(id);
@@ -52,10 +43,5 @@ export class UsersController {
   async delete(@Param('id') id): Promise<DeleteResult> {
     return this.usersService.delete(id);
   }
-
-  // @Delete('users/deleteConstraint') 
-  // async deleteConstraint(): Promise<DeleteResult> {
-  //   return this.usersService.deleteConstraint();
-  // }
 
 }
