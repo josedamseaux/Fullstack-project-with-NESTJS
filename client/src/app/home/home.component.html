@@ -1,0 +1,20 @@
+<mat-card  >
+    <mat-card-header >
+    <button class="addPaymentButton" mat-raised-button (click)="onClickAddPayment()"    > Add payment    </button>
+    </mat-card-header >
+    <mat-card-content *ngIf="addPaymentModeActivated == true;">
+      <form #f ="ngForm" (ngSubmit)=" f.resetForm()" class="mat-elevation-z8" style="width: 100%; padding: 5px;">
+      
+              <mat-form-field id="dniInput">
+                <input matInput  placeholder="DNI" name="dni"  [(ngModel)] = "idForSearch" required>
+              </mat-form-field> 
+            
+              <button mat-raised-button (click)="searchUser(idForSearch);"    > Search for contact   </button>
+  
+        </form> 
+    </mat-card-content>
+
+</mat-card>
+
+
+
